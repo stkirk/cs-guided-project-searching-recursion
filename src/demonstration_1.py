@@ -37,5 +37,30 @@ list I came up was absolutely huge, so make sure your solution is efficient.
 complexity.*
 """
 def find_rotation_point(surnames):
-    # Your code here
+    # initialize min and max
+    min = 0
+    max = len(surnames) - 1
+
+    while min <= max:
+        # Look in the middle, compare surnames[i] and surnames[i-1] for alphabetization
+        guess = (min + max) // 2
+
+        # if surnames[i] < surnames[i-1] alphabetically, we've found the rotation point, return it
+        if surnames[guess] < surnames[guess-1]: # beware negative index edge cases
+            return surnames[guess]
+
+        # otherwise, compare against the first and last names in the list to figure out where to search
+        elif surnames[guess] >= surnames[0]:
+            # if the guess comes after the surname or is the first surname, search the right half
+            min = guess + 1
+
+        # otherwise, go left
+        else:
+            # search the left half
+            max = guess - 1
+
+    # If we end up here with no rotation point
+    return -1
+
+print(find_rotation_point(['liu', 'mcdowell', 'nixon', 'sparks', 'zhang', 'ahmed', 'brandt', 'davenport', 'farley', 'glover', 'kennedy'])) # "ahmed"
 

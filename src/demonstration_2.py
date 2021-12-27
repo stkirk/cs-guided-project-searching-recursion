@@ -25,5 +25,20 @@ containsTypo(5) -> True
 containsTypo(4) -> True
 """
 def firstDraftWithTypo(n):
-    # Your code here
+    # define the bounds of our search
+    left = 0
+    right = n -1 
 
+    while left < right:
+        guess = (left + right) // 2
+        if containsTypo(guess):
+            # if containsTypo(i) == true, we knot that containsType(j) == true for all j > i
+            right = guess - 1
+        else:
+            # The typo is present for all drafts "to the right" of i
+            left = guess + 1
+    return left + 1
+
+print(containsTypo(3)) # false
+print(containsTypo(5)) # true
+print(containsTypo(4)) # true
